@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>מדריך וידאו</title>
+
+<style>
+body{
+  font-family: Arial;
+  text-align: center;
+  margin: 40px;
+}
+
+#message{
+  font-size: 18px;
+  color: red;
+  margin-bottom: 20px;
+}
+
+iframe{
+  width: 80%;
+  height: 450px;
+}
+</style>
+
+</head>
+<body>
+
+<div id="content"></div>
+
+<script>
+
+const expireTime = localStorage.getItem("guideAccess");
+
+if(expireTime && Date.now() < expireTime){
+
+document.getElementById("content").innerHTML = `
+<div id="message">
+הגישה לסרטון זמינה למשך שעה מרגע התשלום
+</div>
+
+<iframe 
+src="https://drive.google.com/file/d/1LVrLJ8ly1qIyN7Q_tjJQeTGxmbYt8CSP/preview"
+frameborder="0"
+allowfullscreen>
+</iframe>
+`;
+
+}else{
+
+localStorage.removeItem("guideAccess");
+
+document.getElementById("content").innerHTML = `
+<h2>פג תוקף הגישה לסרטון</h2>
+`;
+
+}
+
+</script>
+
+</body>
+</html>
