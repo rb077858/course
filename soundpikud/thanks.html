@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>תודה על התשלום</title>
+</head>
+<body>
+
+<h2>התשלום התקבל! מעביר אותך למדריך...</h2>
+
+<script>
+const oneHour = 60 * 60 * 1000;
+const expireTime = Date.now() + oneHour;
+
+// שמירת זמן תפוגה
+localStorage.setItem("guideAccess", expireTime);
+
+// מעבר לדף הסרטון
+setTimeout(function(){
+  window.location.href = "guide.html";
+}, 2000);
+</script>
+
+</body>
+</html>
