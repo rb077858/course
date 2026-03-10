@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ניהול הרשאות למדריך</title>
+<style>
+body { font-family: Arial; text-align: center; margin: 40px; }
+button { margin-top: 20px; padding: 10px 20px; font-size: 16px; }
+</style>
+</head>
+<body>
+
+<h2>ניהול הרשאות למדריך</h2>
+
+<div id="info"></div>
+<button id="clearBtn">מחק הרשאה</button>
+
+<script>
+function updateInfo(){
+    const access = JSON.parse(localStorage.getItem("guideAccess") || "{}");
+    const now = Date.now();
+
+    if(access.paid && access.expire > now){
+        const remaining = Math.floor((access.expire - now)/1000);
+        const minutes = Math.floor(remaining/60);
+        const seconds = remaining % 60;
+        document.getElementById("info").innerHTML = `
+            <p>שילם: כן</p>
+            <p>זמן שנותר לצפייה: ${minutes} דקות ו-${seconds} שניות</p>
+        `;
+    } else {
+        document.getElementById("info").innerHTML = "<p>שילם: לא</p>";
+        localStorage.removeItem("guideAccess");
+    }
+}
+
+// כפתור למחיקת הרשאה
+document.getElementById("clearBtn").onclick = function(){
+    localStorage.removeItem("guideAccess");
+    updateInfo();
+};
+
+updateInfo();
+setInterval(updateInfo, 1000); // עדכון טיימר חי
+</script>
+
+</body>
+</html>
